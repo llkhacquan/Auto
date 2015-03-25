@@ -1,4 +1,4 @@
-package quannk.money.adautoclick;
+package quannk.ad;
 
 import java.awt.AWTException;
 import java.awt.Color;
@@ -16,8 +16,8 @@ public class DigAdzAutoClick extends AutoClick {
 		super();
 	}
 
-	public static void main(String args[]) throws AWTException,
-			HeadlessException, UnsupportedFlavorException, IOException {
+	public static void main(String args[]) throws AWTException, HeadlessException, UnsupportedFlavorException,
+			IOException {
 		DigAdzAutoClick theAuto = new DigAdzAutoClick();
 		// click quality ad
 
@@ -28,27 +28,39 @@ public class DigAdzAutoClick extends AutoClick {
 			theAuto.delay(100);
 			theAuto.pressAKey(KeyEvent.VK_END);
 			theAuto.delay(500);
-			Point p = findCoordinate(quality_adsColor, 210, 300);
+			Point p = findCoordinate(quality_adsColor, 210, 250);
 			if (p == null)
 				return;
 			theAuto.clickMouse(p.x, p.y, InputEvent.BUTTON1_MASK);
 
 			// click view add
-			theAuto.delay(9000);
+			theAuto.waitForWebsite();
 			theAuto.pressAKey(KeyEvent.VK_END);
-			theAuto.delay(6000);
-			p = findCoordinate(quality_adsColor, 900, theAuto.height
-					- (1024 - 780));
-			if (p == null)
-				return;
+			while (true) {
+				theAuto.delay(500);
+				p = findCoordinate(quality_adsColor, theAuto.width - (1280 - 900), theAuto.height - (1024 - 850));
+				if (p != null)
+					break;
+			}
 			theAuto.clickMouse(p.x, p.y, InputEvent.BUTTON1_MASK);
 
 			// capture capcha image
-			theAuto.delay(25000);
+			theAuto.delay(5000);
+			Color[] colors = new Color[100];
+			for (int i = 0; i < colors.length; i++) {
+				colors[i] = theAuto.robot.getPixelColor(360 + i, 100);
+			}
+			out: while (true) {
+				theAuto.delay(500);	
+				for (int i = 0; i < colors.length; i++) {
+					if (!AutoClick.isEqualColor(colors[i], theAuto.robot.getPixelColor(360 + i, 100)))
+						break out;
+				}
+			}
 			int correctCapcha = -1;
 
 			int[] xHome = new int[] { 340, 390, 460, 520, 570 };
-			int[] xCompany = new int[] { 310, 370, 440, 495, 550 };
+			int[] xCompany = new int[] { 300, 360, 430, 485, 540 };
 			int[] x;
 			if (theAuto.width == 1280)
 				x = xCompany;
@@ -58,10 +70,9 @@ public class DigAdzAutoClick extends AutoClick {
 			for (int i = 0; i < 5; i++) {
 				theAuto.clickMouse(x[i], 100, InputEvent.BUTTON3_MASK);
 				theAuto.delay(200);
-				theAuto.pressAKey(KeyEvent.VK_P);
+				theAuto.pressAKey(KeyEvent.VK_O);
 				theAuto.delay(100);
-				url[i] = (String) Toolkit.getDefaultToolkit()
-						.getSystemClipboard().getData(DataFlavor.stringFlavor);
+				url[i] = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
 				System.out.println(url[i]);
 			}
 			outerloop: for (int i = 0; i < 5; i++) {
@@ -78,7 +89,7 @@ public class DigAdzAutoClick extends AutoClick {
 			// click the close window button
 			theAuto.clickMouse(460, 130, InputEvent.BUTTON1_MASK);
 			// wait to comeback to main
-			theAuto.delay(3000);
+			theAuto.waitForWebsite();
 		}
 	}
 }

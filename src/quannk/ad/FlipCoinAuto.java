@@ -1,4 +1,4 @@
-package quannk.money.adautoclick;
+package quannk.ad;
 
 import java.awt.AWTException;
 import java.awt.Color;
@@ -32,7 +32,8 @@ public class FlipCoinAuto {
 		int winStreak = 0;
 		int lostStreak = 0;
 		int lastIndex = 0;
-		int[] values = new int[] { 25, 53, 112, 230, 470, 960, 1955, 3980 };
+		int[] values = new int[] { 30, 70, 145, 300, 650, 1400, 5900, 12000,
+				24500, 50000 };
 		robot = new Robot();
 		robot.delay(1000);
 
@@ -47,7 +48,7 @@ public class FlipCoinAuto {
 			// write new value
 			if (lastIndex == values.length)
 				break;
-			pressNumber(values[lastIndex] * 4);
+			pressNumber(values[lastIndex] * 5);
 			robot.delay(rand(300, 500));
 
 			// chose head or tail
@@ -56,17 +57,17 @@ public class FlipCoinAuto {
 				streakHead++;
 				streakTail = 0;
 				if (streakHead <= 5)
-					robot.mouseMove(rand(132, 140), rand(420, 430) + 252);
+					robot.mouseMove(rand(132, 140), rand(440, 450) + 252);
 				else
-					robot.mouseMove(rand(294, 310), rand(417, 430) + 252);
+					robot.mouseMove(rand(294, 310), rand(437, 450) + 252);
 			} else {
 				// TAIL
 				streakTail++;
 				streakHead = 0;
 				if (streakTail <= 5)
-					robot.mouseMove(rand(294, 310), rand(417, 430) + 252);
+					robot.mouseMove(rand(294, 310), rand(437, 450) + 252);
 				else
-					robot.mouseMove(rand(132, 140), rand(420, 430) + 252);
+					robot.mouseMove(rand(132, 140), rand(440, 450) + 252);
 			}
 
 			// chose it
