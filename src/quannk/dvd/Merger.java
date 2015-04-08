@@ -3,10 +3,9 @@ package quannk.dvd;
 import java.awt.Color;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 
 import quannk.ad.AutoClick;
@@ -18,68 +17,39 @@ public class Merger extends AutoClick {
 		super();
 	}
 
-	public static void main(String[] args) throws FileNotFoundException,
-			IOException {
+	public static void main(String[] args) throws FileNotFoundException, IOException {
 		theAuto.delay(1000);
+		theAuto.clickMouse(100, 10, MouseEvent.BUTTON1_MASK);
+		File enFile, viFile;
+		String outputFileName = null;
 
-		for (int iSeason = 1; iSeason <= 10; iSeason++) {
+		for (int iSeason = 1; iSeason <= 1; iSeason++) {
 			String number = CopySRTFiles.getStringFromNumber(iSeason);
 			// Create new folder to contain new subtitles (done)
-			File subFolder = new File("F:/Friends-sub/ss" + number);
+			File subFolder = new File("F:/Movies/Extra_English");
 			File[] films = subFolder.listFiles();
-			for (int iFilm = 1; iFilm <= 25; iFilm++) {
-				String outputFileName = "merged_ss_"
-						+ CopySRTFiles.getStringFromNumber(iSeason) + "_"
-						+ CopySRTFiles.getStringFromNumber(iFilm) + ".srt";
-				File out = new File("C:/Users/wind/Downloads/" + outputFileName);
-				if (out.exists()) {
-					boolean found = false;
-					try (BufferedReader br = new BufferedReader(new FileReader(
-							"C:/Users/wind/Downloads/" + outputFileName))) {
-						String line;
-						while ((line = br.readLine()) != null) {
-							if (line.contains("font color=")) {
-								found = true;
-								break;
-							}
-							if (line.contains("ô")) {
-								found = true;
-								break;
-							}
-							if (line.contains("à")) {
-								found = true;
-								break;
-							}
-						}
-						if (found)
-							continue;
-					}
-					out.delete();
-				}
-				int enIndex, viIndex;
-				String vi = "SEASON_"
-						+ CopySRTFiles.getStringFromNumber(iSeason) + "x"
-						+ CopySRTFiles.getStringFromNumber(iFilm) + "_vi_";
-				String en = "SEASON_"
-						+ CopySRTFiles.getStringFromNumber(iSeason) + "x"
-						+ CopySRTFiles.getStringFromNumber(iFilm) + "_en_";
-				for (viIndex = 0; viIndex < films.length; viIndex++)
-					if (films[viIndex].toString().contains(vi))
-						break;
-				for (enIndex = 0; enIndex < films.length; enIndex++)
-					if (films[enIndex].toString().contains(en))
-						break;
-				if (viIndex == films.length || enIndex == films.length)
+			for (File film : films) {
+				String filePath = film.getAbsolutePath();
+				String fileName = film.getName();
+				fileName = fileName.substring(0, fileName.length() - 4);
+				if (!filePath.contains(".mkv") && !filePath.contains(".mp4") && !filePath.contains(".avi"))
 					continue;
-
-				Merge(films[enIndex], films[viIndex], outputFileName);
+				if (new File("C:/Users/wind/Downloads/" + fileName + ".Me.srt").exists()) {
+					continue;
+				}
+				enFile = new File(filePath.substring(0, filePath.length() - 4) + ".En.srt");
+				viFile = new File(filePath.substring(0, filePath.length() - 4) + ".Vi.srt");
+				outputFileName = fileName + ".Me.srt";
+				Merge(enFile, viFile, outputFileName);
 			}
 		}
 	}
 
 	public static void Merge(File enFile, File viFile, String outputFileName) {
 		{// Add file english
-			theAuto.clickMouse(500, 350, InputEvent.BUTTON1_MASK);
+			if (!enFile.exists() || !viFile.exists())
+				return;
+			theAuto.clickMouse(600, 350, InputEvent.BUTTON1_MASK);
 			theAuto.delay(1000);
 			AutoClick.setClipboardContent(enFile.getPath());
 			theAuto.press2Key(KeyEvent.VK_CONTROL, KeyEvent.VK_V);
@@ -87,22 +57,22 @@ public class Merger extends AutoClick {
 			theAuto.delay(1000);
 
 			// chose codec
-			theAuto.clickMouse(500, 380, InputEvent.BUTTON1_MASK);
+			theAuto.clickMouse(600, 380, InputEvent.BUTTON1_MASK);
 			theAuto.pressAKey(KeyEvent.VK_HOME);
 			theAuto.pressAKey(KeyEvent.VK_ENTER);
 			theAuto.delay(1000);
 			// chose color
-			theAuto.clickMouse(390, 398, InputEvent.BUTTON1_MASK);
+			theAuto.clickMouse(500, 398, InputEvent.BUTTON1_MASK);
 			theAuto.pressAKey(KeyEvent.VK_END); // yellow
 			theAuto.pressAKey(KeyEvent.VK_ENTER);
 			theAuto.delay(1000);
 			// press Add file
-			theAuto.clickMouse(330, 430, InputEvent.BUTTON1_MASK);
+			theAuto.clickMouse(430, 430, InputEvent.BUTTON1_MASK);
 		}
 
 		theAuto.waitForWebsite();
 		{// Add file vietnam
-			theAuto.clickMouse(500, 350, InputEvent.BUTTON1_MASK);
+			theAuto.clickMouse(600, 350, InputEvent.BUTTON1_MASK);
 			theAuto.delay(1000);
 			AutoClick.setClipboardContent(viFile.getPath());
 			theAuto.press2Key(KeyEvent.VK_CONTROL, KeyEvent.VK_V);
@@ -115,12 +85,12 @@ public class Merger extends AutoClick {
 			theAuto.pressAKey(KeyEvent.VK_ENTER);
 			theAuto.delay(1000);
 			// chose color
-			theAuto.clickMouse(390, 398, InputEvent.BUTTON1_MASK);
+			theAuto.clickMouse(500, 398, InputEvent.BUTTON1_MASK);
 			theAuto.pressAKey(KeyEvent.VK_HOME); // default
 			theAuto.pressAKey(KeyEvent.VK_ENTER);
 			// press Add file
 			theAuto.delay(1000);
-			theAuto.clickMouse(330, 430, InputEvent.BUTTON1_MASK);
+			theAuto.clickMouse(430, 430, InputEvent.BUTTON1_MASK);
 			theAuto.delay(1000);
 		}
 		theAuto.waitForWebsite();
@@ -128,13 +98,13 @@ public class Merger extends AutoClick {
 		// Set output file name
 		theAuto.pressAKey(KeyEvent.VK_END);
 		theAuto.delay(1000);
-		theAuto.clickMouse(500, 370, InputEvent.BUTTON1_MASK);
+		theAuto.clickMouse(600, 370, InputEvent.BUTTON1_MASK);
 		theAuto.press2Key(KeyEvent.VK_CONTROL, KeyEvent.VK_A);
 		AutoClick.setClipboardContent(outputFileName);
 		theAuto.press2Key(KeyEvent.VK_CONTROL, KeyEvent.VK_V);
 
 		// click download
-		theAuto.clickMouse(400, 490, InputEvent.BUTTON1_MASK);
+		theAuto.clickMouse(500, 490, InputEvent.BUTTON1_MASK);
 		theAuto.waitForWebsite();
 
 		theAuto.pressAKey(KeyEvent.VK_F5);

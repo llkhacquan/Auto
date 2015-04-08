@@ -28,7 +28,7 @@ public class DigAdzAutoClick extends AutoClick {
 			theAuto.delay(100);
 			theAuto.pressAKey(KeyEvent.VK_END);
 			theAuto.delay(500);
-			Point p = findCoordinate(quality_adsColor, 210, 250);
+			Point p = findCoordinate(quality_adsColor, 210, 350);
 			if (p == null)
 				return;
 			theAuto.clickMouse(p.x, p.y, InputEvent.BUTTON1_MASK);
@@ -44,22 +44,23 @@ public class DigAdzAutoClick extends AutoClick {
 			}
 			theAuto.clickMouse(p.x, p.y, InputEvent.BUTTON1_MASK);
 
-			// capture capcha image
+			// wait for captcha image
 			theAuto.delay(5000);
 			Color[] colors = new Color[100];
 			for (int i = 0; i < colors.length; i++) {
 				colors[i] = theAuto.robot.getPixelColor(360 + i, 100);
 			}
 			out: while (true) {
-				theAuto.delay(500);	
+				theAuto.delay(500);
 				for (int i = 0; i < colors.length; i++) {
 					if (!AutoClick.isEqualColor(colors[i], theAuto.robot.getPixelColor(360 + i, 100)))
 						break out;
 				}
 			}
+
 			int correctCapcha = -1;
 
-			int[] xHome = new int[] { 340, 390, 460, 520, 570 };
+			int[] xHome = new int[] { 325, 385, 445, 520, 575 };
 			int[] xCompany = new int[] { 300, 360, 430, 485, 540 };
 			int[] x;
 			if (theAuto.width == 1280)
@@ -69,9 +70,9 @@ public class DigAdzAutoClick extends AutoClick {
 			String[] url = new String[5];
 			for (int i = 0; i < 5; i++) {
 				theAuto.clickMouse(x[i], 100, InputEvent.BUTTON3_MASK);
-				theAuto.delay(200);
+				theAuto.delay(300);
 				theAuto.pressAKey(KeyEvent.VK_O);
-				theAuto.delay(100);
+				theAuto.delay(150);
 				url[i] = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
 				System.out.println(url[i]);
 			}
@@ -85,7 +86,12 @@ public class DigAdzAutoClick extends AutoClick {
 			}
 			// click the correct captcha
 			theAuto.clickMouse(x[correctCapcha], 100, InputEvent.BUTTON1_MASK);
-			theAuto.delay(2500);
+			while (true) {
+				theAuto.delay(500);
+				p = findCoordinate(quality_adsColor, 450, 120);
+				if (p != null)
+					break;
+			}
 			// click the close window button
 			theAuto.clickMouse(460, 130, InputEvent.BUTTON1_MASK);
 			// wait to comeback to main

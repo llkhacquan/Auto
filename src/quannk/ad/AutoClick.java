@@ -56,16 +56,16 @@ public class AutoClick {
 		assert (robot != null);
 		robot.keyPress(keycode);
 		robot.keyRelease(keycode);
-		robot.delay(50);
+		robot.delay(10);
 	}
 
 	public void press2Key(int keycode, int keycode2) {
 		assert (robot != null);
 		robot.keyPress(keycode);
-		robot.delay(50);
+		robot.delay(10);
 		pressAKey(keycode2);
 		robot.keyRelease(keycode);
-		robot.delay(50);
+		robot.delay(10);
 	}
 
 	public void clickMouse(int x, int y, int mouseCode) {
@@ -78,7 +78,6 @@ public class AutoClick {
 	public void clickMouse(int mouse) {
 		assert (robot != null);
 		robot.mousePress(mouse);
-		robot.delay(50);
 		robot.mouseRelease(mouse);
 		robot.delay(50);
 	}
