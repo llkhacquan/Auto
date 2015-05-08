@@ -1,4 +1,4 @@
-package quannk.ad;
+package quannk.auto.ad;
 
 import java.awt.AWTException;
 import java.awt.Color;
@@ -6,6 +6,8 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+
+import quannk.auto.AutoClick;
 
 public class PaidverdsAutoClick extends AutoClick {
 	public static void main(String[] args) throws AWTException {

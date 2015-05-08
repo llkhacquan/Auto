@@ -1,4 +1,4 @@
-package quannk.ad;
+package quannk.auto.ad;
 
 import java.awt.AWTException;
 import java.awt.Color;

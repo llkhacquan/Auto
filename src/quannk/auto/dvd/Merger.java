@@ -1,4 +1,4 @@
-package quannk.dvd;
+package quannk.auto.dvd;
 
 import java.awt.Color;
 import java.awt.event.InputEvent;
@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import quannk.ad.AutoClick;
+import quannk.auto.AutoClick;
 
 public class Merger extends AutoClick {
 	static Merger theAuto = new Merger();
@@ -18,15 +18,14 @@ public class Merger extends AutoClick {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		theAuto.delay(1000);
+		theAuto.delay(500);
 		theAuto.clickMouse(100, 10, MouseEvent.BUTTON1_MASK);
 		File enFile, viFile;
 		String outputFileName = null;
 
-		for (int iSeason = 1; iSeason <= 1; iSeason++) {
-			String number = CopySRTFiles.getStringFromNumber(iSeason);
+		for (int iSeason = 1; iSeason <= 4; iSeason++) {
 			// Create new folder to contain new subtitles (done)
-			File subFolder = new File("F:/Movies/Extra_English");
+			File subFolder = new File("C:\\Users\\wind\\Desktop\\Subs\\PB SS" + iSeason);
 			File[] films = subFolder.listFiles();
 			for (File film : films) {
 				String filePath = film.getAbsolutePath();
@@ -50,22 +49,22 @@ public class Merger extends AutoClick {
 			if (!enFile.exists() || !viFile.exists())
 				return;
 			theAuto.clickMouse(600, 350, InputEvent.BUTTON1_MASK);
-			theAuto.delay(1000);
+			theAuto.delay(500);
 			AutoClick.setClipboardContent(enFile.getPath());
 			theAuto.press2Key(KeyEvent.VK_CONTROL, KeyEvent.VK_V);
 			theAuto.pressAKey(KeyEvent.VK_ENTER);
-			theAuto.delay(1000);
+			theAuto.delay(500);
 
 			// chose codec
 			theAuto.clickMouse(600, 380, InputEvent.BUTTON1_MASK);
 			theAuto.pressAKey(KeyEvent.VK_HOME);
 			theAuto.pressAKey(KeyEvent.VK_ENTER);
-			theAuto.delay(1000);
+			theAuto.delay(500);
 			// chose color
 			theAuto.clickMouse(500, 398, InputEvent.BUTTON1_MASK);
 			theAuto.pressAKey(KeyEvent.VK_END); // yellow
 			theAuto.pressAKey(KeyEvent.VK_ENTER);
-			theAuto.delay(1000);
+			theAuto.delay(500);
 			// press Add file
 			theAuto.clickMouse(430, 430, InputEvent.BUTTON1_MASK);
 		}
@@ -73,31 +72,31 @@ public class Merger extends AutoClick {
 		theAuto.waitForWebsite();
 		{// Add file vietnam
 			theAuto.clickMouse(600, 350, InputEvent.BUTTON1_MASK);
-			theAuto.delay(1000);
+			theAuto.delay(500);
 			AutoClick.setClipboardContent(viFile.getPath());
 			theAuto.press2Key(KeyEvent.VK_CONTROL, KeyEvent.VK_V);
 			theAuto.pressAKey(KeyEvent.VK_ENTER);
-			theAuto.delay(1000);
+			theAuto.delay(500);
 
 			// chose codec
 			theAuto.clickMouse(500, 380, InputEvent.BUTTON1_MASK);
 			theAuto.pressAKey(KeyEvent.VK_HOME);
 			theAuto.pressAKey(KeyEvent.VK_ENTER);
-			theAuto.delay(1000);
+			theAuto.delay(500);
 			// chose color
 			theAuto.clickMouse(500, 398, InputEvent.BUTTON1_MASK);
 			theAuto.pressAKey(KeyEvent.VK_HOME); // default
 			theAuto.pressAKey(KeyEvent.VK_ENTER);
 			// press Add file
-			theAuto.delay(1000);
+			theAuto.delay(500);
 			theAuto.clickMouse(430, 430, InputEvent.BUTTON1_MASK);
-			theAuto.delay(1000);
+			theAuto.delay(500);
 		}
 		theAuto.waitForWebsite();
 
 		// Set output file name
 		theAuto.pressAKey(KeyEvent.VK_END);
-		theAuto.delay(1000);
+		theAuto.delay(500);
 		theAuto.clickMouse(600, 370, InputEvent.BUTTON1_MASK);
 		theAuto.press2Key(KeyEvent.VK_CONTROL, KeyEvent.VK_A);
 		AutoClick.setClipboardContent(outputFileName);
@@ -113,7 +112,7 @@ public class Merger extends AutoClick {
 
 	public void waitForWebsite() {
 		while (true) {
-			theAuto.delay(1000);
+			theAuto.delay(500);
 			Color c = theAuto.robot.getPixelColor(75, 42);
 			if (!AutoClick.isEqualColor(c, new Color(110, 110, 110)))
 				break;
