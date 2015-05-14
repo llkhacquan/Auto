@@ -33,7 +33,7 @@ public class Merge2 extends AutoClick {
         String fileName = f.getName();
         if (!fileName.contains(".en.srt"))
           continue;
-        if (new File("C:/Users/wind/Downloads/" + fileName.replace("en.srt", "me.srt")).exists()) {
+        if (new File(System.getProperty("user.home") + "/Downloads/" + fileName.replace("en.srt", "me.srt")).exists()) {
           continue;
         }
         enFile = f;
@@ -45,12 +45,12 @@ public class Merge2 extends AutoClick {
   }
 
   public static void Merge(File enFile, File viFile, String outputFileName) {
-    {// Add file english
+    {// Add file vi
       if (!enFile.exists() || !viFile.exists())
         return;
       theAuto.clickMouse(600, 350, InputEvent.BUTTON1_MASK);
       theAuto.delay(500);
-      AutoClick.setClipboardContent(enFile.getPath());
+      AutoClick.setClipboardContent(viFile.getPath());
       theAuto.press2Key(KeyEvent.VK_CONTROL, KeyEvent.VK_V);
       theAuto.pressAKey(KeyEvent.VK_ENTER);
       theAuto.delay(200);
@@ -58,12 +58,12 @@ public class Merge2 extends AutoClick {
       // chose codec
       theAuto.clickMouse(600, 380, InputEvent.BUTTON1_MASK);
       theAuto.pressAKey(KeyEvent.VK_HOME);
-      theAuto.delay(10);
+      theAuto.delay(50);
       theAuto.pressAKey(KeyEvent.VK_ENTER);
       theAuto.delay(200);
       // chose color
       theAuto.clickMouse(500, 398, InputEvent.BUTTON1_MASK);
-      theAuto.pressAKey(KeyEvent.VK_END); // yellow
+      theAuto.pressAKey(KeyEvent.VK_HOME); // default
       theAuto.pressAKey(KeyEvent.VK_ENTER);
       theAuto.delay(200);
       // press Add file
@@ -71,17 +71,17 @@ public class Merge2 extends AutoClick {
     }
 
     theAuto.waitForWebsite();
-    {// Add file vietnam
+    {// Add file en
       theAuto.clickMouse(600, 350, InputEvent.BUTTON1_MASK);
       theAuto.delay(200);
-      AutoClick.setClipboardContent(viFile.getPath());
+      AutoClick.setClipboardContent(enFile.getPath());
       theAuto.press2Key(KeyEvent.VK_CONTROL, KeyEvent.VK_V);
       theAuto.pressAKey(KeyEvent.VK_ENTER);
       theAuto.delay(200);
 
       // chose color
       theAuto.clickMouse(500, 398, InputEvent.BUTTON1_MASK);
-      theAuto.pressAKey(KeyEvent.VK_HOME); // default
+      theAuto.pressAKey(KeyEvent.VK_END); // yellow
       theAuto.pressAKey(KeyEvent.VK_ENTER);
       // press Add file
       theAuto.delay(200);
