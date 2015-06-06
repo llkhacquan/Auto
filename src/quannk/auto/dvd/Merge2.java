@@ -24,9 +24,15 @@ public class Merge2 extends AutoClick {
     File enFile, viFile;
     String outputFileName = null;
 
-    for (int iSeason = 1; iSeason <= 9; iSeason++) {
+    for (int iSeason = 1; iSeason <= 10; iSeason++) {
       // Create new folder to contain new subtitles (done)
-      File subFolder = new File("C:\\Users\\wind\\Dropbox\\HQ productions\\Subtiles\\Subs\\HIMYM\\HIMYM " + iSeason);
+      String folderPath = "C:\\Users\\wind\\Dropbox\\HQ productions\\Subtiles\\Subs from studyphim\\Friends\\SS";
+      if (iSeason <= 10)
+        folderPath += "0" + iSeason;
+      else
+        folderPath += iSeason;
+      File subFolder = new File(folderPath);
+
       File[] files = subFolder.listFiles();
       for (File f : files) {
         String filePath = f.getAbsolutePath();
@@ -45,12 +51,12 @@ public class Merge2 extends AutoClick {
   }
 
   public static void Merge(File enFile, File viFile, String outputFileName) {
-    {// Add file vi
-      if (!enFile.exists() || !viFile.exists())
-        return;
+    if (!enFile.exists() || !viFile.exists())
+      return;
+    {// Add file en
       theAuto.clickMouse(600, 350, InputEvent.BUTTON1_MASK);
       theAuto.delay(500);
-      AutoClick.setClipboardContent(viFile.getPath());
+      AutoClick.setClipboardContent(enFile.getPath());
       theAuto.press2Key(KeyEvent.VK_CONTROL, KeyEvent.VK_V);
       theAuto.pressAKey(KeyEvent.VK_ENTER);
       theAuto.delay(200);
@@ -58,12 +64,12 @@ public class Merge2 extends AutoClick {
       // chose codec
       theAuto.clickMouse(600, 380, InputEvent.BUTTON1_MASK);
       theAuto.pressAKey(KeyEvent.VK_HOME);
-      theAuto.delay(50);
+      theAuto.delay(100);
       theAuto.pressAKey(KeyEvent.VK_ENTER);
       theAuto.delay(200);
       // chose color
       theAuto.clickMouse(500, 398, InputEvent.BUTTON1_MASK);
-      theAuto.pressAKey(KeyEvent.VK_HOME); // default
+      theAuto.pressAKey(KeyEvent.VK_END); // yellow
       theAuto.pressAKey(KeyEvent.VK_ENTER);
       theAuto.delay(200);
       // press Add file
@@ -71,17 +77,17 @@ public class Merge2 extends AutoClick {
     }
 
     theAuto.waitForWebsite();
-    {// Add file en
+    {// Add file vi
       theAuto.clickMouse(600, 350, InputEvent.BUTTON1_MASK);
       theAuto.delay(200);
-      AutoClick.setClipboardContent(enFile.getPath());
+      AutoClick.setClipboardContent(viFile.getPath());
       theAuto.press2Key(KeyEvent.VK_CONTROL, KeyEvent.VK_V);
       theAuto.pressAKey(KeyEvent.VK_ENTER);
       theAuto.delay(200);
 
       // chose color
       theAuto.clickMouse(500, 398, InputEvent.BUTTON1_MASK);
-      theAuto.pressAKey(KeyEvent.VK_END); // yellow
+      theAuto.pressAKey(KeyEvent.VK_HOME); // default
       theAuto.pressAKey(KeyEvent.VK_ENTER);
       // press Add file
       theAuto.delay(200);
