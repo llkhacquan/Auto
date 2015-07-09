@@ -11,6 +11,9 @@ import java.io.IOException;
 import quannk.auto.AutoClick;
 
 public class Merge2 extends AutoClick {
+  private static final int _100 = 150;
+  private static final int _200 = 300;
+  private static final int _500 = 700;
   static Merge2 theAuto = new Merge2();
 
   public Merge2() {
@@ -24,13 +27,9 @@ public class Merge2 extends AutoClick {
     File enFile, viFile;
     String outputFileName = null;
 
-    for (int iSeason = 1; iSeason <= 10; iSeason++) {
+    for (int iSeason = 1; iSeason <= 1; iSeason++) {
       // Create new folder to contain new subtitles (done)
-      String folderPath = "C:\\Users\\wind\\Dropbox\\HQ productions\\Subtiles\\Subs from studyphim\\Friends\\SS";
-      if (iSeason <= 10)
-        folderPath += "0" + iSeason;
-      else
-        folderPath += iSeason;
+      String folderPath = "C:\\Users\\wind\\Dropbox\\HQ productions\\final sub\\Twilight";
       File subFolder = new File(folderPath);
 
       File[] files = subFolder.listFiles();
@@ -39,12 +38,13 @@ public class Merge2 extends AutoClick {
         String fileName = f.getName();
         if (!fileName.contains(".en.srt"))
           continue;
-        if (new File(System.getProperty("user.home") + "/Downloads/" + fileName.replace("en.srt", "me.srt")).exists()) {
+
+        outputFileName = fileName.replace("en.srt", "srt");
+        if (new File(System.getProperty("user.home") + "/Downloads/" + outputFileName).exists()) {
           continue;
         }
         enFile = f;
         viFile = new File(filePath.replace("en.srt", "vi.srt"));
-        outputFileName = fileName.replace("en.srt", "me.srt");
         Merge(enFile, viFile, outputFileName);
       }
     }
@@ -55,23 +55,23 @@ public class Merge2 extends AutoClick {
       return;
     {// Add file en
       theAuto.clickMouse(600, 350, InputEvent.BUTTON1_MASK);
-      theAuto.delay(500);
+      theAuto.delay(_500);
       AutoClick.setClipboardContent(enFile.getPath());
       theAuto.press2Key(KeyEvent.VK_CONTROL, KeyEvent.VK_V);
       theAuto.pressAKey(KeyEvent.VK_ENTER);
-      theAuto.delay(200);
+      theAuto.delay(_200);
 
       // chose codec
       theAuto.clickMouse(600, 380, InputEvent.BUTTON1_MASK);
       theAuto.pressAKey(KeyEvent.VK_HOME);
-      theAuto.delay(100);
+      theAuto.delay(_100);
       theAuto.pressAKey(KeyEvent.VK_ENTER);
-      theAuto.delay(200);
+      theAuto.delay(_200);
       // chose color
       theAuto.clickMouse(500, 398, InputEvent.BUTTON1_MASK);
       theAuto.pressAKey(KeyEvent.VK_END); // yellow
       theAuto.pressAKey(KeyEvent.VK_ENTER);
-      theAuto.delay(200);
+      theAuto.delay(_200);
       // press Add file
       theAuto.clickMouse(430, 430, InputEvent.BUTTON1_MASK);
     }
@@ -79,26 +79,26 @@ public class Merge2 extends AutoClick {
     theAuto.waitForWebsite();
     {// Add file vi
       theAuto.clickMouse(600, 350, InputEvent.BUTTON1_MASK);
-      theAuto.delay(200);
+      theAuto.delay(_200);
       AutoClick.setClipboardContent(viFile.getPath());
       theAuto.press2Key(KeyEvent.VK_CONTROL, KeyEvent.VK_V);
       theAuto.pressAKey(KeyEvent.VK_ENTER);
-      theAuto.delay(200);
+      theAuto.delay(_200);
 
       // chose color
       theAuto.clickMouse(500, 398, InputEvent.BUTTON1_MASK);
       theAuto.pressAKey(KeyEvent.VK_HOME); // default
       theAuto.pressAKey(KeyEvent.VK_ENTER);
       // press Add file
-      theAuto.delay(200);
+      theAuto.delay(_200);
       theAuto.clickMouse(430, 430, InputEvent.BUTTON1_MASK);
-      theAuto.delay(200);
+      theAuto.delay(_200);
     }
     theAuto.waitForWebsite();
 
     // Set output file name
     theAuto.pressAKey(KeyEvent.VK_END);
-    theAuto.delay(500);
+    theAuto.delay(_500);
     theAuto.clickMouse(600, 370, InputEvent.BUTTON1_MASK);
     theAuto.press2Key(KeyEvent.VK_CONTROL, KeyEvent.VK_A);
     AutoClick.setClipboardContent(outputFileName);
@@ -109,7 +109,7 @@ public class Merge2 extends AutoClick {
     theAuto.waitForWebsite();
 
     theAuto.pressAKey(KeyEvent.VK_HOME);
-    theAuto.delay(200);
+    theAuto.delay(_200);
     theAuto.pressAKey(KeyEvent.VK_F5);
     theAuto.waitForWebsite();
   }
